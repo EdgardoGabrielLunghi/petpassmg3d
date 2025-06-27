@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ativação do Pet Pass</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff3e0;
+      padding: 40px;
+      text-align: center;
+    }
+    h1 {
+      color: #ff6f00;
+    }
+    .caixa {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .serie {
+      font-size: 20px;
+      color: #444;
+      margin: 20px 0;
+    }
+    .botao {
+      background-color: #ff6f00;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="caixa">
+    <h1>Ativação do PET PASS 🐾</h1>
+    <p class="serie">Número de série detectado: <strong id="serie">...</strong></p>
+    <p>Este PET PASS ainda não foi ativado.</p>
+    <p>Para ativar, clique no botão abaixo:</p>
+    <a id="botaoAtivar" class="botao" href="#">Quero ativar meu PET PASS</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const numero = params.get("s") || "";
+    document.getElementById("serie").textContent = numero;
+    document.getElementById("botaoAtivar").href = `https://forms.gle/YOUR_FORM_URL?s=${numero}`;
+  </script>
+</body>
+</html>
