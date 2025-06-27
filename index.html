@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pet Pass - Ativação</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #0066cc;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0;
+      width: 200px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .mensagem {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bem-vindo ao seu PET PASS 🐾</h1>
+  <p>Digite o número de série do seu produto para ativar:</p>
+
+  <input type="text" id="numeroSerie" placeholder="Ex: PP-12837" />
+  <br />
+  <button onclick="verificarSerie()">Ativar</button>
+
+  <div class="mensagem" id="mensagem"></div>
+
+  <script>
+    function verificarSerie() {
+      const serie = document.getElementById("numeroSerie").value.trim().toUpperCase();
+      if (!/^PP[VIE]?-\d{5}$/.test(serie)) {
+        document.getElementById("mensagem").innerText = "Número de série inválido.";
+        return;
+      }
+
+      // Tenta abrir a ficha (se já existir)
+      fetch(`fichas/${serie}.html`)
+        .then(response => {
+          if (response.ok) {
+            window.location.href = `fichas/${serie}.html`;
+          } else {
+            // Senão, leva para registro
+            window.location.href = `registrar.html?s=${serie}`;
+          }
+        })
+        .catch(() => {
+          document.getElementById("mensagem").innerText = "Erro ao verificar a série.";
+        });
+    }
+
+    // Suporte a leitura automática de QR (parâmetro ?s=PP-xxxxx)
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get("s");
+    if (s) {
+      document.getElementById("numeroSerie").value = s;
+      verificarSerie();
+    }
+  </script>
+</body>
+</html>
