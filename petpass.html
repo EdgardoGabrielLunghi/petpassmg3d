@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ativar Pet Pass</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f2f4f8;
+      margin: 0;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header img {
+      max-width: 160px;
+      margin-top: 10px;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="PET PASS5 (2).png" alt="Pet Pass Logo" />
+  </header>
+  <form id="petpassForm" method="POST" action="https://script.google.com/macros/s/AKfycbzSTeQm3xLQIQuRVacWvUxKF8qr4laLVBs1_WRU_EFRqkIEjiydVKLEiohRc8jPq8iR/exec" enctype="multipart/form-data">
+    <h1>Ativar Pet Pass</h1>
+
+    <label>Número de Série (ex: PP-12345):</label>
+    <input type="text" name="numero_serie" required />
+
+    <label>📸 Foto do Pet:</label>
+    <input type="file" name="foto_pet" accept="image/*" required />
+
+    <label>🐾 Nome do Pet:</label>
+    <input type="text" name="nome_pet" required />
+    <label>Espécie:</label>
+    <input type="text" name="especie" required />
+    <label>Raça:</label>
+    <input type="text" name="raca" />
+    <label>Sexo:</label>
+    <select name="sexo">
+      <option value="Macho">Macho</option>
+      <option value="Fêmea">Fêmea</option>
+    </select>
+    <label>Cor:</label>
+    <input type="text" name="cor" />
+
+    <label>🚨 Alergias ou Intolerâncias:</label>
+    <textarea name="alergias_observadas"></textarea>
+
+    <label>👤 Nome do Tutor:</label>
+    <input type="text" name="nome_tutor" required />
+    <label>Telefone:</label>
+    <input type="tel" name="telefone" />
+    <label>Email:</label>
+    <input type="email" name="email" />
+    <label>Endereço (Referência aproximada):</label>
+    <input type="text" name="endereco" />
+
+    <label>💉 Vacinas:</label>
+    <textarea name="vacinas"></textarea>
+
+    <label>🗓 Último Atendimento - Data:</label>
+    <input type="date" name="data_atendimento" />
+    <label>Clínica:</label>
+    <input type="text" name="clinica" />
+    <label>Tipo de Atendimento:</label>
+    <input type="text" name="tipo_atendimento" />
+    <label>Observações:</label>
+    <textarea name="observacoes_atendimento"></textarea>
+
+    <label>📅 Próxima Visita - Data:</label>
+    <input type="date" name="data_visita" />
+    <label>Observação:</label>
+    <textarea name="observacao_visita"></textarea>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    document.getElementById('petpassForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert("Este formulário ainda não está conectado a um backend.");
+    });
+  </script>
+</body>
+</html>
