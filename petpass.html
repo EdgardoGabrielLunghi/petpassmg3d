@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -85,7 +84,7 @@
     <label>👤 Nome do Tutor:</label>
     <input type="text" name="nome_tutor" required />
     <label>Telefone:</label>
-    <input type="tel" name="telefone" id="telefone" required />
+    <input type="tel" name="telefone" required />
     <label>Email:</label>
     <input type="email" name="email" />
     <label>Endereço (Referência aproximada):</label>
@@ -108,20 +107,29 @@
     <label>Observação:</label>
     <textarea name="observacao_visita"></textarea>
 
-    <input type="hidden" name="botao_whatsapp" id="botao_whatsapp" />
-    <input type="hidden" name="botao_localizacao" id="botao_localizacao" />
-
     <button type="submit">Enviar</button>
   </form>
 
   <script>
-    const form = document.getElementById('petpassForm');
+    document.getElementById('petpassForm').addEventListener('submit', function(e) {
+      const telefone = this.telefone.value.replace(/\D/g, '');
+      const botaoWhatsApp = `https://wa.me/55${telefone}?text=Olá! Encontrei seu pet!`;
+      const botaoLocalizacao = `https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55${telefone}`;
+      const form = e.target;
 
-    form.addEventListener('submit', function(e) {
-      const telefone = document.getElementById('telefone').value.replace(/\D/g, '');
-      document.getElementById('botao_whatsapp').value = "https://wa.me/55" + telefone + "?text=Olá! Encontrei seu pet!";
-      document.getElementById('botao_localizacao').value = "https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55" + telefone;
+      const hiddenWhats = document.createElement("input");
+      hiddenWhats.type = "hidden";
+      hiddenWhats.name = "botao_whatsapp";
+      hiddenWhats.value = botaoWhatsApp;
+      form.appendChild(hiddenWhats);
+
+      const hiddenLoc = document.createElement("input");
+      hiddenLoc.type = "hidden";
+      hiddenLoc.name = "botao_localizacao";
+      hiddenLoc.value = botaoLocalizacao;
+      form.appendChild(hiddenLoc);
     });
   </script>
 </body>
 </html>
+
