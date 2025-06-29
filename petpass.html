@@ -55,7 +55,7 @@
   <header>
     <img src="PET PASS5 (2).png" alt="Pet Pass Logo" />
   </header>
-  <form id="petpassForm" method="POST" action="https://script.google.com/macros/s/AKfycbzSTeQm3xLQIQuRVacWvUxKF8qr4laLVBs1_WRU_EFRqkIEjiydVKLEiohRc8jPq8iR/exec" enctype="multipart/form-data">
+  <form id="petpassForm">
     <h1>Ativar Pet Pass</h1>
 
     <label>Número de Série (ex: PP-12345):</label>
@@ -111,23 +111,47 @@
   </form>
 
   <script>
-    document.getElementById('petpassForm').addEventListener('submit', function(e) {
-      const telefone = this.telefone.value.replace(/\D/g, '');
+    document.getElementById('petpassForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+
+      const telefone = form.telefone.value.replace(/\D/g, '');
       const botaoWhatsApp = `https://wa.me/55${telefone}?text=Olá! Encontrei seu pet!`;
       const botaoLocalizacao = `https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55${telefone}`;
-      const form = e.target;
 
-      const hiddenWhats = document.createElement("input");
-      hiddenWhats.type = "hidden";
-      hiddenWhats.name = "botao_whatsapp";
-      hiddenWhats.value = botaoWhatsApp;
-      form.appendChild(hiddenWhats);
+      // Convert image to base64
+      const fileInput = form.querySelector('input[name="foto_pet"]');
+      const file = fileInput.files[0];
+      const reader = new FileReader();
 
-      const hiddenLoc = document.createElement("input");
-      hiddenLoc.type = "hidden";
-      hiddenLoc.name = "botao_localizacao";
-      hiddenLoc.value = botaoLocalizacao;
-      form.appendChild(hiddenLoc);
+      reader.onloadend = function () {
+        const base64Image = reader.result.split(',')[1]; // remove data:image/jpeg;base64,
+        const payload = new URLSearchParams();
+
+        for (const [key, value] of formData.entries()) {
+          if (key !== "foto_pet") payload.append(key, value);
+        }
+
+        payload.append("foto_pet", base64Image);
+        payload.append("botao_whatsapp", botaoWhatsApp);
+        payload.append("botao_localizacao", botaoLocalizacao);
+
+        fetch("https://script.google.com/macros/s/AKfycbzSTeQm3xLQIQuRVacWvUxKF8qr4laLVBs1_WRU_EFRqkIEjiydVKLEiohRc8jPq8iR/exec", {
+          method: "POST",
+          body: payload,
+        })
+        .then(res => res.text())
+        .then(msg => alert(msg))
+        .catch(err => alert("Erro ao enviar: " + err));
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        alert("Por favor, selecione uma foto.");
+      }
     });
   </script>
 </body>
