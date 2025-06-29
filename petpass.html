@@ -52,9 +52,9 @@
   </style>
 </head>
 <body>
-  <header>
-    <img src="PET PASS5 (2).png" alt="Pet Pass Logo" />
-  </header>
+<header>
+  <img src="logo-petpass.png" alt="Pet Pass Logo" />
+</header>
   <form id="petpassForm">
     <h1>Ativar Pet Pass</h1>
 
@@ -121,13 +121,12 @@
       const botaoWhatsApp = `https://wa.me/55${telefone}?text=Olá! Encontrei seu pet!`;
       const botaoLocalizacao = `https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55${telefone}`;
 
-      // Convert image to base64
       const fileInput = form.querySelector('input[name="foto_pet"]');
       const file = fileInput.files[0];
       const reader = new FileReader();
 
       reader.onloadend = function () {
-        const base64Image = reader.result.split(',')[1]; // remove data:image/jpeg;base64,
+        const base64Image = reader.result.split(',')[1];
         const payload = new URLSearchParams();
 
         for (const [key, value] of formData.entries()) {
@@ -156,4 +155,3 @@
   </script>
 </body>
 </html>
-
