@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Atualizar Ficha do Pet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+    }
+    button {
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐾 Atualizar Ficha PET PASS</h1>
+  <form id="form-edicao">
+    <label>Número de Série (PP-xxxxx):</label>
+    <input type="text" name="numeroSerie" required />
+
+    <label>Idade do pet:</label>
+    <input type="text" name="idade" />
+
+    <label>Telefone do tutor:</label>
+    <input type="text" name="telefone" />
+
+    <label>Vacinas aplicadas:</label>
+    <textarea name="vacinas"></textarea>
+
+    <label>Data do último atendimento:</label>
+    <input type="date" name="data_atendimento" />
+
+    <label>Data da próxima visita:</label>
+    <input type="date" name="data_visita" />
+
+    <label>Observações do atendimento:</label>
+    <textarea name="observacoes_atendimento"></textarea>
+
+    <label>Nome da clínica:</label>
+    <input type="text" name="clinica" />
+
+    <button type="submit">💾 Atualizar Ficha</button>
+  </form>
+
+  <p id="status" style="margin-top: 20px;"></p>
+
+  <script>
+    document.getElementById('form-edicao').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const dados = Object.fromEntries(new FormData(this));
+
+      const resposta = await fetch("https://editardatos.petpassmg3d.com.br/api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+      });
+
+      if (resposta.ok) {
+        document.getElementById("status").innerText = "✅ Ficha atualizada com sucesso!";
+      } else {
+        document.getElementById("status").innerText = "❌ Erro ao atualizar a ficha.";
+      }
+    });
+  </script>
+</body>
+</html>
+

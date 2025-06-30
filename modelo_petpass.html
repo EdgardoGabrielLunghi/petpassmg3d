@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ficha do Pet - {{nome_pet}}</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    h1 { text-align: center; }
+    .foto-pet {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .foto-pet img {
+      max-width: 200px;
+      border-radius: 10px;
+    }
+    .botao {
+      display: inline-block;
+      margin: 10px 5px;
+      padding: 10px 15px;
+      background: #0077cc;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .botao:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐾 Ficha do Pet - {{nome_pet}} 🐾</h1>
+
+  <div class="foto-pet">
+    <img src="{{foto_pet}}" alt="Foto do Pet">
+  </div>
+
+  <p><strong>Espécie:</strong> {{especie}}</p>
+  <p><strong>Raça:</strong> {{raca}}</p>
+  <p><strong>Sexo:</strong> {{sexo}}</p>
+  <p><strong>Cor:</strong> {{cor}}</p>
+  <p><strong>Alergias ou Intolerâncias:</strong> {{alergias_observadas}}</p>
+
+  <p><strong>Nome do Tutor:</strong> {{nome_tutor}}</p>
+  <p><strong>Telefone:</strong> <a href="https://wa.me/55{{telefone}}" target="_blank">{{telefone}}</a></p>
+  <p><strong>E-mail:</strong> <a href="mailto:{{email}}">{{email}}</a></p>
+  <p><strong>Endereço Aproximado:</strong> {{endereco}}</p>
+
+  <p><strong>Vacinas:</strong> {{vacinas}}</p>
+
+  <p><strong>Último atendimento:</strong><br>
+  Data: {{data_atendimento}}<br>
+  Clínica: {{clinica}}<br>
+  Tipo: {{tipo_atendimento}}<br>
+  Observações: {{observacoes_atendimento}}</p>
+
+  <p><strong>Próxima visita:</strong><br>
+  Data: {{data_visita}}<br>
+  Observação: {{observacao_visita}}</p>
+
+  <div>
+    <a class="botao" href="https://wa.me/55{{telefone}}" target="_blank">📱 Enviar mensagem ao tutor</a>
+    <a class="botao" href="https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55{{telefone}}" target="_blank">📍 Enviar localização</a>
+    <a class="botao" href="#" onclick="window.print()">🖨️ Salvar em PDF</a>
+    <a class="botao" href="https://petpassmg3d.com.br/editar.html?codigo={{numero_serie}}" target="_blank">✏️ Atualizar dados</a>
+  </div>
+
+  <hr/>
+  <p style="font-size: 0.8em; text-align: center;">Documento gerado automaticamente por Pet Pass MG3D</p>
+</body>
+</html>

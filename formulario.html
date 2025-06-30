@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro do Pet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #007b9e;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007b9e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005f80;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🐾 Registro do Pet 🐾</h2>
+    <form id="formulario" enctype="multipart/form-data">
+      <label for="nome">Nome do Pet</label>
+      <input type="text" id="nome" required>
+
+      <label for="especie">Espécie</label>
+      <input type="text" id="especie" required>
+
+      <label for="raca">Raça</label>
+      <input type="text" id="raca">
+
+      <label for="sexo">Sexo</label>
+      <input type="text" id="sexo">
+
+      <label for="cor">Cor</label>
+      <input type="text" id="cor">
+
+      <label for="alergias">Alergias ou Intolerâncias</label>
+      <input type="text" id="alergias">
+
+      <label for="nomeTutor">Nome do Tutor</label>
+      <input type="text" id="nomeTutor" required>
+
+      <label for="telefone">Telefone (com DDD)</label>
+      <input type="tel" id="telefone" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email">
+
+      <label for="endereco">Endereço Aproximado</label>
+      <input type="text" id="endereco">
+
+      <label for="vacinas">Vacinas</label>
+      <textarea id="vacinas" rows="2"></textarea>
+
+      <label for="foto">Foto do Pet</label>
+      <input type="file" id="foto" accept="image/*" required>
+
+      <button type="submit">Gerar Ficha</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("formulario").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const params = new URLSearchParams(window.location.search);
+      const codigo = params.get("codigo") || "PP-00000";
+
+      const nome = document.getElementById("nome").value;
+      const especie = document.getElementById("especie").value;
+      const raca = document.getElementById("raca").value;
+      const sexo = document.getElementById("sexo").value;
+      const cor = document.getElementById("cor").value;
+      const alergias = document.getElementById("alergias").value;
+      const nomeTutor = document.getElementById("nomeTutor").value;
+      const telefone = document.getElementById("telefone").value;
+      const email = document.getElementById("email").value;
+      const endereco = document.getElementById("endereco").value;
+      const vacinas = document.getElementById("vacinas").value;
+      const foto = document.getElementById("foto").files[0];
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const imagemBase64 = e.target.result;
+
+        const html = `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ficha do Pet - ${nome}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #ffffff;
+      color: #000000;
+      margin: 30px;
+    }
+    img {
+      width: 190px;
+      height: 190px;
+      border-radius: 10px;
+      margin: 15px 0;
+      object-fit: cover;
+    }
+    .botao {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .botao:hover {
+      background-color: #0056b3;
+    }
+    .info {
+      text-align: left;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🐾 Ficha do Pet - ${nome} 🐾</h2>
+
+  <img src="${imagemBase64}" alt="Foto do Pet">
+
+  <div class="info">
+    <p><strong>Espécie:</strong> ${especie}</p>
+    <p><strong>Raça:</strong> ${raca}</p>
+    <p><strong>Sexo:</strong> ${sexo}</p>
+    <p><strong>Cor:</strong> ${cor}</p>
+    <p><strong>Alergias ou Intolerâncias:</strong> ${alergias}</p>
+
+    <br>
+
+    <p><strong>Nome do Tutor:</strong> ${nomeTutor}</p>
+    <p><strong>Telefone:</strong> <a href="https://wa.me/55${telefone}" target="_blank">${telefone}</a></p>
+    <p><strong>E-mail:</strong> <a href="mailto:${email}">${email}</a></p>
+    <p><strong>Endereço Aproximado:</strong> ${endereco}</p>
+
+    <br>
+
+    <p><strong>Vacinas:</strong> ${vacinas}</p>
+  </div>
+
+  <br>
+
+  <a class="botao" href="https://wa.me/55${telefone}" target="_blank">📩 Enviar mensagem ao tutor</a>
+  <a class="botao" href="https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55${telefone}" target="_blank">📍 Enviar localização</a>
+
+  <footer>
+    📩 Deseja atualizar esta ficha? Escreva a <a href="mailto:petpassmg3d@gmail.com">petpassmg3d@gmail.com</a> com seu número de série (${codigo}).
+  </footer>
+
+</body>
+</html>`;
+
+        const blob = new Blob([html], { type: "text/html" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `${codigo}.html`;
+        link.click();
+      };
+
+      reader.readAsDataURL(foto);
+    });
+  </script>
+</body>
+</html>

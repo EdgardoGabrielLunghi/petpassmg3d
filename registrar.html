@@ -1,57 +1,66 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ativação do Pet Pass</title>
+  <meta charset="UTF-8">
+  <title>Ativar Pet Pass</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #fff3e0;
-      padding: 40px;
       text-align: center;
-    }
-    h1 {
-      color: #ff6f00;
-    }
-    .caixa {
-      background-color: #ffffff;
+      background-color: #f9f9f9;
       padding: 20px;
-      border-radius: 10px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .serie {
-      font-size: 20px;
-      color: #444;
-      margin: 20px 0;
+
+    h1 {
+      color: #007b9e;
     }
-    .botao {
-      background-color: #ff6f00;
-      color: white;
-      padding: 10px 20px;
-      border: none;
+
+    input[type="text"] {
+      padding: 10px;
       font-size: 16px;
-      border-radius: 5px;
-      text-decoration: none;
+      width: 80%;
+      max-width: 300px;
+      border: 2px solid #007b9e;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #007b9e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f80;
     }
   </style>
 </head>
 <body>
-  <div class="caixa">
-    <h1>Ativação do PET PASS 🐾</h1>
-    <p class="serie">Número de série detectado: <strong id="serie">...</strong></p>
-    <p>Este PET PASS ainda não foi ativado.</p>
-    <p>Para ativar, clique no botão abaixo:</p>
-    <a id="botaoAtivar" class="botao" href="#">Quero ativar meu PET PASS</a>
-  </div>
+  <h1>🐾 Ative seu Pet Pass 🐾</h1>
+  <p>Insira o número de série que veio com seu produto:</p>
+
+  <input type="text" id="codigo" placeholder="Ex: PP-12837" />
+
+  <br>
+  <button onclick="continuar()">Continuar</button>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const numero = params.get("s") || "";
-    document.getElementById("serie").textContent = numero;
-    document.getElementById("botaoAtivar").href = `https://forms.gle/YOUR_FORM_URL?s=${numero}`;
+    function continuar() {
+      const codigo = document.getElementById('codigo').value.trim().toUpperCase();
+      if (!codigo.startsWith("PP-") || codigo.length < 8) {
+        alert("Código inválido. Use o formato PP-12345");
+        return;
+      }
+      // Redirige al formulario personalizado (puede ser una sola página dinámica también)
+      window.location.href = `formulario.html?codigo=${codigo}`;
+    }
   </script>
 </body>
 </html>
