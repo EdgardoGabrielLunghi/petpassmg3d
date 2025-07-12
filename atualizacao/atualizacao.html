@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Atualizar Dados - Pet Pass</title>
+</head>
+<body>
+  <h2>Atualizar Dados do Pet Pass</h2>
+  <form action="https://script.google.com/macros/s/AKfycby9QfAmMklWCwGsdGhBFgeOqbmiIvJjxE5RtK_n84UIRe_orB8FKu1AZyH-UfPoSthr/exec" method="POST">
+    <label for="numero_serie">Número de Série:</label><br/>
+    <input type="text" id="numero_serie" name="numero_serie" required /><br/><br/>
+
+    <label for="telefone">Telefone:</label><br/>
+    <input type="text" id="telefone" name="telefone" /><br/><br/>
+
+    <label for="vacinas">Vacinas:</label><br/>
+    <textarea id="vacinas" name="vacinas" rows="3" cols="40"></textarea><br/><br/>
+
+    <label for="data_atendimento">Data do Último Atendimento:</label><br/>
+    <input type="date" id="data_atendimento" name="data_atendimento" /><br/><br/>
+
+    <label for="clinica">Clínica:</label><br/>
+    <input type="text" id="clinica" name="clinica" /><br/><br/>
+
+    <label for="tipo_atendimento">Tipo de Atendimento:</label><br/>
+    <input type="text" id="tipo_atendimento" name="tipo_atendimento" /><br/><br/>
+
+    <label for="observacoes_atendimento">Observações do Atendimento:</label><br/>
+    <textarea id="observacoes_atendimento" name="observacoes_atendimento" rows="3" cols="40"></textarea><br/><br/>
+
+    <label for="data_visita">Data da Próxima Visita:</label><br/>
+    <input type="date" id="data_visita" name="data_visita" /><br/><br/>
+
+    <label for="observacao_visita">Observação da Visita:</label><br/>
+    <textarea id="observacao_visita" name="observacao_visita" rows="3" cols="40"></textarea><br/><br/>
+
+    <button type="submit">Atualizar Dados</button>
+  </form>
+</body>
+</html>

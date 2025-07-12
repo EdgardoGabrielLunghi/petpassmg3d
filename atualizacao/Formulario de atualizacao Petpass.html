@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atualização Pet Pass</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f0f4f8; }
+    form { background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #333; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, textarea { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
+    button { margin-top: 20px; padding: 10px 15px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+    button:hover { background: #218838; }
+  </style>
+</head>
+<body>
+  <form method="POST" action="https://script.google.com/macros/s/AKfycby9QfAmMklWCwGsdGhBFgeOqbmiIvJjxE5RtK_n84UIRe_orB8FKu1AZyH-UfPoSthr/exec">
+    <h2>Atualizar Dados do Pet Pass</h2>
+
+    <label for="numero_serie">Número de Série</label>
+    <input type="text" id="numero_serie" name="numero_serie" required>
+
+    <label for="telefone">Telefone</label>
+    <input type="text" id="telefone" name="telefone">
+
+    <label for="vacinas">Vacinas Aplicadas</label>
+    <textarea id="vacinas" name="vacinas" rows="2"></textarea>
+
+    <label for="data_atendimento">Data do Último Atendimento</label>
+    <input type="date" id="data_atendimento" name="data_atendimento">
+
+    <label for="clinica">Clínica Veterinária</label>
+    <input type="text" id="clinica" name="clinica">
+
+    <label for="tipo_atendimento">Tipo de Atendimento</label>
+    <input type="text" id="tipo_atendimento" name="tipo_atendimento">
+
+    <label for="observacoes_atendimento">Observações do Atendimento</label>
+    <textarea id="observacoes_atendimento" name="observacoes_atendimento" rows="2"></textarea>
+
+    <label for="data_visita">Data da Próxima Visita</label>
+    <input type="date" id="data_visita" name="data_visita">
+
+    <label for="observacao_visita">Observação da Próxima Visita</label>
+    <textarea id="observacao_visita" name="observacao_visita" rows="2"></textarea>
+
+    <button type="submit">Atualizar Dados</button>
+  </form>
+</body>
+</html>
