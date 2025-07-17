@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha Pet Pass</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header img {
+      max-width: 180px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #333;
+    }
+
+    .campo {
+      margin-bottom: 10px;
+    }
+
+    .campo strong {
+      color: #555;
+    }
+
+    .botoes {
+      margin-top: 20px;
+    }
+
+    .botoes a {
+      display: inline-block;
+      margin-right: 15px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .foto {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .foto img {
+      max-width: 250px;
+      border-radius: 12px;
+      border: 2px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="../logo-petpass.png" alt="Pet Pass Logo" />
+  </header>
+
+  <div class="foto">
+    <img src="[foto_pet]" alt="Foto do Pet" />
+  </div>
+
+  <h2>🐾 DADOS DO PET</h2>
+  <div class="campo"><strong>Nome:</strong> [nome_pet]</div>
+  <div class="campo"><strong>Espécie:</strong> [especie]</div>
+  <div class="campo"><strong>Raça:</strong> [raca]</div>
+  <div class="campo"><strong>Sexo:</strong> [sexo]</div>
+  <div class="campo"><strong>Cor:</strong> [cor]</div>
+
+  <h2>🚨 Alergias ou Intolerâncias</h2>
+  <div class="campo">[alergias_observadas]</div>
+
+  <h2>👤 DADOS DO TUTOR</h2>
+  <div class="campo"><strong>Nome:</strong> [nome_tutor]</div>
+  <div class="campo"><strong>Telefone:</strong> [telefone]</div>
+  <div class="campo"><strong>Email:</strong> [email]</div>
+  <div class="campo"><strong>Endereço:</strong> [endereco]</div>
+
+  <h2>💉 Vacinas</h2>
+  <div class="campo">[vacinas]</div>
+
+  <h2>🔔 EMERGÊNCIA</h2>
+  <div class="botoes">
+    <a href="[botao_whatsapp]" target="_blank">WhatsApp</a>
+    <a href="[botao_localizacao]" target="_blank">Localização</a>
+  </div>
+
+</body>
+</html>
+
