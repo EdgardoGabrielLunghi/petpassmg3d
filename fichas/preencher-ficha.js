@@ -1,11 +1,4 @@
-
-// preencher-ficha.js
-
-// Configurar Firebase (ya debes tener esto en tu firebase-config.js)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-// Tu configuración (debe ser idéntica a la de firebase-config.js)
+// === Configuração Firebase ===
 const firebaseConfig = {
   apiKey: "AIzaSyAIv7h54zklg9OisU_fmmGKJVVmXYNbTu0",
   authDomain: "petpassmg3d-7b9d4.firebaseapp.com",
@@ -15,42 +8,30 @@ const firebaseConfig = {
   appId: "1:753370902277:web:ec273f6decc4e5ed8b116c"
 };
 
-// Inicializa Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-// Detectar número de serie desde la URL
-const url = window.location.pathname;
-const numeroSerie = url.substring(url.lastIndexOf("/") + 1).replace(".html", "");
+// === 1. Obter número de série do nome do arquivo ===
+const caminho = window.location.pathname;
+const partes = caminho.split('/');
+const nomeArquivo = partes[partes.length - 1]; // ex: PP-1234.html
+const numeroSerie = nomeArquivo.replace('.html', '');
 
-// Lógica para buscar y reemplazar los datos
-async function preencherFicha() {
-  try {
-    const docRef = doc(db, "fichas", numeroSerie);
-    const docSnap = await getDoc(docRef);
+// === 2. Buscar dados no Firestore ===
+db.collection("fichas").doc(numeroSerie).get().then((doc) => {
+  if (doc.exists) {
+    const dados = doc.data();
 
-    if (docSnap.exists()) {
-      const dados = docSnap.data();
-
-      // Reemplazar todos los campos
-      Object.keys(dados).forEach(chave => {
-        const valor = dados[chave];
-
-        if (chave === "foto_pet") {
-          const img = document.querySelector('img[src*="[foto_pet]"]');
-          if (img) img.src = `data:image/jpeg;base64,${valor}`;
-        } else {
-          const elementos = document.body.innerHTML;
-          document.body.innerHTML = elementos.replaceAll(`[${chave}]`, valor);
-        }
-      });
-    } else {
-      alert("Ficha não encontrada para: " + numeroSerie);
+    // === 3. Substituir marcadores no HTML ===
+    for (const campo in dados) {
+      const valor = dados[campo];
+      document.body.innerHTML = document.body.innerHTML.replaceAll(`[${campo}]`, valor);
     }
-  } catch (e) {
-    console.error("Erro ao buscar dados da ficha:", e);
-    alert("Erro ao carregar os dados do pet.");
-  }
-}
 
-window.addEventListener("DOMContentLoaded", preencherFicha);
+  } else {
+    document.body.innerHTML = `<h2 style="text-align:center;color:red;">Ficha não encontrada para o número de série ${numeroSerie}</h2>`;
+  }
+}).catch((error) => {
+  document.body.innerHTML = `<h2 style="text-align:center;color:red;">Erro ao carregar os dados</h2><p>${error}</p>`;
+});
