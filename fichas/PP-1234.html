@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha Pet Pass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      background-color: #f4f7fa;
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    header img {
+      max-width: 140px;
+    }
+
+    .foto {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .foto img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 100%;
+      border: 3px solid #ddd;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #222;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+
+    .campo {
+      margin: 5px 0;
+    }
+
+    .campo strong {
+      color: #444;
+    }
+
+    .botoes {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .botoes a {
+      flex: 1;
+      text-align: center;
+      padding: 12px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .botoes a:hover {
+      background-color: #005fc4;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="../logo-petpass.png" alt="Pet Pass Logo" />
+  </header>
+
+  <div class="foto">
+    <img src="[foto_pet]" alt="Foto do Pet" />
+  </div>
+
+  <div class="card">
+    <h2>🐾 DADOS DO PET</h2>
+    <div class="campo"><strong>Nome:</strong> [nome_pet]</div>
+    <div class="campo"><strong>Espécie:</strong> [especie]</div>
+    <div class="campo"><strong>Raça:</strong> [raca]</div>
+    <div class="campo"><strong>Sexo:</strong> [sexo]</div>
+    <div class="campo"><strong>Cor:</strong> [cor]</div>
+  </div>
+
+  <div class="card">
+    <h2>🚨 Alergias ou Intolerâncias</h2>
+    <div class="campo">[alergias_observadas]</div>
+  </div>
+
+  <div class="card">
+    <h2>👤 DADOS DO TUTOR</h2>
+    <div class="campo"><strong>Nome:</strong> [nome_tutor]</div>
+    <div class="campo"><strong>Telefone:</strong> [telefone]</div>
+    <div class="campo"><strong>Email:</strong> [email]</div>
+    <div class="campo"><strong>Endereço:</strong> [endereco]</div>
+  </div>
+
+  <div class="card">
+    <h2>💉 Vacinas</h2>
+    <div class="campo">[vacinas]</div>
+  </div>
+
+  <div class="card">
+    <h2>🔔 EMERGÊNCIA</h2>
+    <div class="botoes">
+      <a href="[botao_whatsapp]" target="_blank">WhatsApp</a>
+      <a href="[botao_localizacao]" target="_blank">Localização</a>
+    </div>
+  </div>
+
+</body>
+<script src="preencher-ficha.js"></script>
+</html>
