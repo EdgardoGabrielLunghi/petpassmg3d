@@ -2,8 +2,10 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ativar Pet Pass</title>
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -51,10 +53,10 @@
     }
   </style>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"></script>
+  <!-- Firebase SDKs (versão compatível com HTML puro) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAIv7h54zklg9OisU_fmmGKJVVmXYNbTu0",
@@ -64,6 +66,7 @@
       messagingSenderId: "753370902277",
       appId: "1:753370902277:web:ec273f6decc4e5ed8b116c"
     };
+
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const storage = firebase.storage();
@@ -149,3 +152,4 @@
   </script>
 </body>
 </html>
+
