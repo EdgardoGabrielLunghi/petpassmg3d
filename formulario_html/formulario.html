@@ -50,6 +50,24 @@
       color: #333;
     }
   </style>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIv7h54zklg9OisU_fmmGKJVVmXYNbTu0",
+      authDomain: "petpassmg3d-7b9d4.firebaseapp.com",
+      projectId: "petpassmg3d-7b9d4",
+      storageBucket: "petpassmg3d-7b9d4.appspot.com",
+      messagingSenderId: "753370902277",
+      appId: "1:753370902277:web:ec273f6decc4e5ed8b116c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+  </script>
 </head>
 <body>
 <header>
@@ -99,9 +117,9 @@
   <script>
     document.getElementById('petpassForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-
       const form = e.target;
       const formData = new FormData(form);
+      const numeroSerie = form.numero_serie.value.trim();
 
       const telefone = form.telefone.value.replace(/\D/g, '');
       const botaoWhatsApp = `https://wa.me/55${telefone}?text=Olá! Encontrei seu pet!`;
@@ -109,33 +127,23 @@
 
       const fileInput = form.querySelector('input[name="foto_pet"]');
       const file = fileInput.files[0];
-      const reader = new FileReader();
+      const storageRef = firebase.storage().ref();
+      const imageRef = storageRef.child(`fotos/${numeroSerie}.jpg`);
 
-      reader.onloadend = function () {
-        const base64Image = reader.result.split(',')[1];
-        const payload = new URLSearchParams();
+      try {
+        const snapshot = await imageRef.put(file);
+        const fotoUrl = await snapshot.ref.getDownloadURL();
 
-        for (const [key, value] of formData.entries()) {
-          if (key !== "foto_pet") payload.append(key, value);
-        }
+        const data = Object.fromEntries(formData.entries());
+        data.foto_pet = fotoUrl;
+        data.botao_whatsapp = botaoWhatsApp;
+        data.botao_localizacao = botaoLocalizacao;
 
-        payload.append("foto_pet", base64Image);
-        payload.append("botao_whatsapp", botaoWhatsApp);
-        payload.append("botao_localizacao", botaoLocalizacao);
-
-        fetch("https://script.google.com/macros/s/AKfycbw0Gb4cBubfeKsR8NyxE5C3uIszq1_hd8WU2j6piWrzDRCGHPcX-nAdZiYYTKDZTBm4pg/exec", {
-          method: "POST",
-          body: payload,
-        })
-        .then(res => res.text())
-        .then(msg => alert(msg))
-        .catch(err => alert("Erro ao enviar: " + err));
-      };
-
-      if (file) {
-        reader.readAsDataURL(file);
-      } else {
-        alert("Por favor, selecione uma foto.");
+        await db.collection("petpass").doc(numeroSerie).set(data);
+        alert("Ficha registrada com sucesso!");
+        form.reset();
+      } catch (err) {
+        alert("Erro ao registrar: " + err.message);
       }
     });
   </script>
