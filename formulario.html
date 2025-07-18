@@ -1,214 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Registro do Pet</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ativar Pet Pass</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       padding: 20px;
+      background: #f2f4f8;
+      margin: 0;
     }
-    .container {
-      max-width: 500px;
-      margin: auto;
-      background: white;
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header img {
+      max-width: 160px;
+      margin-top: 10px;
+    }
+    form {
+      background: #fff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    h2 {
-      text-align: center;
-      color: #007b9e;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
-      margin-top: 5px;
+      margin-bottom: 15px;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
     button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background-color: #007b9e;
+      background-color: #007bff;
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      padding: 12px;
+      border-radius: 5px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #005f80;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>🐾 Registro do Pet 🐾</h2>
-    <form id="formulario" enctype="multipart/form-data">
-      <label for="nome">Nome do Pet</label>
-      <input type="text" id="nome" required>
-
-      <label for="especie">Espécie</label>
-      <input type="text" id="especie" required>
-
-      <label for="raca">Raça</label>
-      <input type="text" id="raca">
-
-      <label for="sexo">Sexo</label>
-      <input type="text" id="sexo">
-
-      <label for="cor">Cor</label>
-      <input type="text" id="cor">
-
-      <label for="alergias">Alergias ou Intolerâncias</label>
-      <input type="text" id="alergias">
-
-      <label for="nomeTutor">Nome do Tutor</label>
-      <input type="text" id="nomeTutor" required>
-
-      <label for="telefone">Telefone (com DDD)</label>
-      <input type="tel" id="telefone" required>
-
-      <label for="email">Email</label>
-      <input type="email" id="email">
-
-      <label for="endereco">Endereço Aproximado</label>
-      <input type="text" id="endereco">
-
-      <label for="vacinas">Vacinas</label>
-      <textarea id="vacinas" rows="2"></textarea>
-
-      <label for="foto">Foto do Pet</label>
-      <input type="file" id="foto" accept="image/*" required>
-
-      <button type="submit">Gerar Ficha</button>
-    </form>
-  </div>
-
-  <script>
-    document.getElementById("formulario").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const params = new URLSearchParams(window.location.search);
-      const codigo = params.get("codigo") || "PP-00000";
-
-      const nome = document.getElementById("nome").value;
-      const especie = document.getElementById("especie").value;
-      const raca = document.getElementById("raca").value;
-      const sexo = document.getElementById("sexo").value;
-      const cor = document.getElementById("cor").value;
-      const alergias = document.getElementById("alergias").value;
-      const nomeTutor = document.getElementById("nomeTutor").value;
-      const telefone = document.getElementById("telefone").value;
-      const email = document.getElementById("email").value;
-      const endereco = document.getElementById("endereco").value;
-      const vacinas = document.getElementById("vacinas").value;
-      const foto = document.getElementById("foto").files[0];
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const imagemBase64 = e.target.result;
-
-        const html = `
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Ficha do Pet - ${nome}</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #ffffff;
-      color: #000000;
-      margin: 30px;
-    }
-    img {
-      width: 190px;
-      height: 190px;
-      border-radius: 10px;
-      margin: 15px 0;
-      object-fit: cover;
-    }
-    .botao {
-      display: inline-block;
-      margin: 10px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-    .botao:hover {
       background-color: #0056b3;
     }
-    .info {
-      text-align: left;
-      display: inline-block;
-      margin-top: 20px;
-    }
-    footer {
-      margin-top: 30px;
-      font-size: 12px;
-      color: gray;
+    h1 {
+      text-align: center;
+      color: #333;
     }
   </style>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIv7h54zklg9OisU_fmmGKJVVmXYNbTu0",
+      authDomain: "petpassmg3d-7b9d4.firebaseapp.com",
+      projectId: "petpassmg3d-7b9d4",
+      storageBucket: "petpassmg3d-7b9d4.appspot.com",
+      messagingSenderId: "753370902277",
+      appId: "1:753370902277:web:ec273f6decc4e5ed8b116c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+  </script>
 </head>
 <body>
+<header>
+  <img src="../logo-petpass.png" alt="Pet Pass Logo" />
+</header>
+  <form id="petpassForm">
+    <h1>Ativar Pet Pass</h1>
 
-  <h2>🐾 Ficha do Pet - ${nome} 🐾</h2>
+    <label>Número de Série (ex: PP-1234):</label>
+    <input type="text" name="numero_serie" required />
 
-  <img src="${imagemBase64}" alt="Foto do Pet">
+    <label>📸 Foto do Pet:</label>
+    <input type="file" name="foto_pet" accept="image/*" required />
 
-  <div class="info">
-    <p><strong>Espécie:</strong> ${especie}</p>
-    <p><strong>Raça:</strong> ${raca}</p>
-    <p><strong>Sexo:</strong> ${sexo}</p>
-    <p><strong>Cor:</strong> ${cor}</p>
-    <p><strong>Alergias ou Intolerâncias:</strong> ${alergias}</p>
+    <label>🐾 Nome do Pet:</label>
+    <input type="text" name="nome_pet" required />
+    <label>Espécie:</label>
+    <input type="text" name="especie" required />
+    <label>Raça:</label>
+    <input type="text" name="raca" />
+    <label>Sexo:</label>
+    <select name="sexo">
+      <option value="Macho">Macho</option>
+      <option value="Fêmea">Fêmea</option>
+    </select>
+    <label>Cor:</label>
+    <input type="text" name="cor" />
 
-    <br>
+    <label>🚨 Alergias ou Intolerâncias:</label>
+    <textarea name="alergias_observadas"></textarea>
 
-    <p><strong>Nome do Tutor:</strong> ${nomeTutor}</p>
-    <p><strong>Telefone:</strong> <a href="https://wa.me/55${telefone}" target="_blank">${telefone}</a></p>
-    <p><strong>E-mail:</strong> <a href="mailto:${email}">${email}</a></p>
-    <p><strong>Endereço Aproximado:</strong> ${endereco}</p>
+    <label>👤 Nome do Tutor:</label>
+    <input type="text" name="nome_tutor" required />
+    <label>Telefone:</label>
+    <input type="tel" name="telefone" required />
+    <label>Email:</label>
+    <input type="email" name="email" />
+    <label>Endereço (Referência aproximada):</label>
+    <input type="text" name="endereco" />
 
-    <br>
+    <label>💉 Vacinas:</label>
+    <textarea name="vacinas"></textarea>
 
-    <p><strong>Vacinas:</strong> ${vacinas}</p>
-  </div>
+    <button type="submit">Enviar</button>
+  </form>
 
-  <br>
+  <script>
+    document.getElementById('petpassForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const numeroSerie = form.numero_serie.value.trim();
 
-  <a class="botao" href="https://wa.me/55${telefone}" target="_blank">📩 Enviar mensagem ao tutor</a>
-  <a class="botao" href="https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55${telefone}" target="_blank">📍 Enviar localização</a>
+      const telefone = form.telefone.value.replace(/\D/g, '');
+      const botaoWhatsApp = `https://wa.me/55${telefone}?text=Olá! Encontrei seu pet!`;
+      const botaoLocalizacao = `https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55${telefone}`;
 
-  <footer>
-    📩 Deseja atualizar esta ficha? Escreva a <a href="mailto:petpassmg3d@gmail.com">petpassmg3d@gmail.com</a> com seu número de série (${codigo}).
-  </footer>
+      const fileInput = form.querySelector('input[name="foto_pet"]');
+      const file = fileInput.files[0];
+      const storageRef = firebase.storage().ref();
+      const imageRef = storageRef.child(`fotos/${numeroSerie}.jpg`);
 
-</body>
-</html>`;
+      try {
+        const snapshot = await imageRef.put(file);
+        const fotoUrl = await snapshot.ref.getDownloadURL();
 
-        const blob = new Blob([html], { type: "text/html" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `${codigo}.html`;
-        link.click();
-      };
+        const data = Object.fromEntries(formData.entries());
+        data.foto_pet = fotoUrl;
+        data.botao_whatsapp = botaoWhatsApp;
+        data.botao_localizacao = botaoLocalizacao;
 
-      reader.readAsDataURL(foto);
+        await db.collection("petpass").doc(numeroSerie).set(data);
+        alert("Ficha registrada com sucesso!");
+        form.reset();
+      } catch (err) {
+        alert("Erro ao registrar: " + err.message);
+      }
     });
   </script>
 </body>
