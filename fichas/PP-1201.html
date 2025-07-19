@@ -1,0 +1,78 @@
+<!-- PP-modelo.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ficha do Pet</title>
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+  <style>
+    body { font-family: sans-serif; max-width: 700px; margin: 30px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #fff; }
+    h1 { text-align: center; }
+    .botao { display: inline-block; margin: 10px 5px; padding: 10px 15px; background: #0077cc; color: white; text-decoration: none; border-radius: 5px; }
+    .botao:hover { background: #005fa3; }
+    .foto-pet { width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIv7h54zklg9OisU_fmmGKJVVmXYNbTu0",
+      authDomain: "petpassmg3d-7b9d4.firebaseapp.com",
+      projectId: "petpassmg3d-7b9d4",
+      storageBucket: "petpassmg3d-7b9d4.appspot.com",
+      messagingSenderId: "753370902277",
+      appId: "1:753370902277:web:ec273f6decc4e5ed8b116c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    async function preencherFicha() {
+      const nomeArquivo = window.location.pathname.split("/").pop(); // Ex: PP-1234.html
+      const numeroSerie = nomeArquivo.replace(".html", ""); // Ex: PP-1234
+
+      try {
+        const doc = await db.collection("petpass").doc(numeroSerie).get();
+        if (!doc.exists) {
+          document.getElementById("conteudo").innerHTML = "<p>❌ Nenhum dado encontrado para este número de série.</p>";
+          return;
+        }
+
+        const data = doc.data();
+        const conteudo = `
+          <h1>🐾 Ficha do Pet - ${data.nome_pet}</h1>
+          <img src="${data.foto_pet}" class="foto-pet" alt="Foto do Pet">
+          <p><strong>Número de Série:</strong> ${numeroSerie}</p>
+          <p><strong>Espécie:</strong> ${data.especie}</p>
+          <p><strong>Raça:</strong> ${data.raca}</p>
+          <p><strong>Sexo:</strong> ${data.sexo}</p>
+          <p><strong>Cor:</strong> ${data.cor}</p>
+          <p><strong>Alergias ou Intolerâncias:</strong> ${data.alergias_observadas}</p>
+          <hr/>
+          <p><strong>Tutor:</strong> ${data.nome_tutor}</p>
+          <p><strong>Telefone:</strong> ${data.telefone}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>Endereço:</strong> ${data.endereco}</p>
+          <p><strong>Vacinas:</strong> ${data.vacinas}</p>
+          <hr/>
+          <a class="botao" href="${data.botao_whatsapp}" target="_blank">📱 Enviar mensagem ao tutor</a>
+          <a class="botao" href="${data.botao_localizacao}" target="_blank">📍 Enviar localização</a>
+        `;
+        document.getElementById("conteudo").innerHTML = conteudo;
+      } catch (err) {
+        document.getElementById("conteudo").innerHTML = "<p>❌ Erro ao carregar dados.</p>";
+        console.error(err);
+      }
+    }
+
+    window.onload = preencherFicha;
+  </script>
+</head>
+<body>
+  <div id="conteudo">
+    <p>🔄 Carregando ficha...</p>
+  </div>
+</body>
+</html>

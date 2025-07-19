@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha do Pet - [nome_pet]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            height: 60px;
+            max-width: 100%;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .emergency-buttons a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .emergency-buttons a.location {
+            background-color: #007bff;
+        }
+        .pet-photo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .pet-photo img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pet Pass</h1>
+
+    <div class="logo">
+        <img src="../assets/logo_petpass.png" alt="Logo Pet Pass">
+    </div>
+
+    <div class="pet-photo">
+        <img src="[foto_pet]" alt="Foto do Pet">
+    </div>
+
+    <div class="section">
+        <h2>🐾 Dados do Pet</h2>
+        <p><strong>Nome:</strong> [nome_pet]</p>
+        <p><strong>Espécie:</strong> [especie]</p>
+        <p><strong>Raça:</strong> [raca]</p>
+        <p><strong>Sexo:</strong> [sexo]</p>
+        <p><strong>Cor:</strong> [cor]</p>
+    </div>
+
+    <div class="section">
+        <h2>🚨 Alergias ou Intolerâncias</h2>
+        <p>[alergias_observadas]</p>
+    </div>
+
+    <div class="section">
+        <h2>👤 Dados do Tutor</h2>
+        <p><strong>Nome:</strong> [nome_tutor]</p>
+        <p><strong>Telefone:</strong> [telefone]</p>
+        <p><strong>Endereço:</strong> [endereco]</p>
+        <p><strong>Email:</strong> [email]</p>
+    </div>
+
+    <div class="section">
+        <h2>💉 Vacinas</h2>
+        <p>[vacinas]</p>
+    </div>
+
+    <div class="section">
+        <h2>🐶 Se você encontrou este pet, entre em contato com o tutor agora mesmo.</h2>
+        <div class="emergency-buttons">
+            <a href="[botao_whatsapp]" target="_blank">🔗 WhatsApp</a>
+            <a href="[botao_localizacao]" target="_blank" class="location">📍 Localização</a>
+        </div>
+    </div>
+
+</body>
+</html>
