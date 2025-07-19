@@ -1,3 +1,4 @@
+<!-- formulario.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -53,7 +54,7 @@
     }
   </style>
 
-  <!-- Firebase SDKs (versão compatível com HTML puro) -->
+  <!-- Firebase SDKs (compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
@@ -66,7 +67,6 @@
       messagingSenderId: "753370902277",
       appId: "1:753370902277:web:ec273f6decc4e5ed8b116c"
     };
-
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const storage = firebase.storage();
@@ -124,14 +124,18 @@
       const formData = new FormData(form);
       const numeroSerie = form.numero_serie.value.trim();
 
+      if (!numeroSerie.startsWith("PP-")) {
+        alert("Número de série inválido. Deve começar com PP-.");
+        return;
+      }
+
       const telefone = form.telefone.value.replace(/\D/g, '');
       const botaoWhatsApp = `https://wa.me/55${telefone}?text=Olá! Encontrei seu pet!`;
       const botaoLocalizacao = `https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55${telefone}`;
 
       const fileInput = form.querySelector('input[name="foto_pet"]');
       const file = fileInput.files[0];
-      const storageRef = firebase.storage().ref();
-      const imageRef = storageRef.child(`fotos/${numeroSerie}.jpg`);
+      const imageRef = firebase.storage().ref().child(`fotos/${numeroSerie}.jpg`);
 
       try {
         const snapshot = await imageRef.put(file);
@@ -146,10 +150,12 @@
         alert("Ficha registrada com sucesso!");
         form.reset();
       } catch (err) {
+        console.error("Erro ao registrar:", err);
         alert("Erro ao registrar: " + err.message);
       }
     });
   </script>
 </body>
 </html>
+
 
