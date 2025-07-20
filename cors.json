@@ -1,8 +1,12 @@
 [
   {
-    "origin": ["https://petpassmg3d.com.br"],
-    "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    "maxAgeSeconds": 3600,
-    "responseHeader": ["Content-Type", "Access-Control-Allow-Origin"]
+    "origin": [
+      "https://petpassmg3d-7b9d4.web.app",
+      "https://petpassmg3d.firebaseapp.com",
+      "https://petpassmg3d.com.br"
+    ],
+    "method": ["GET", "POST", "PUT"],
+    "responseHeader": ["Content-Type", "Authorization", "x-goog-resumable"],
+    "maxAgeSeconds": 3600
   }
 ]

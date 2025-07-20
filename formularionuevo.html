@@ -123,10 +123,11 @@
         payload.append("[botao_whatsapp]", botaoWhatsApp);
         payload.append("[botao_localizacao]", botaoLocalizacao);
 
-        fetch("https://script.google.com/macros/s/AKfycbwIZfEv1iHWmhwwwx4SvCazeUbOMtB8OXdPa_zol53xfx0QiqvTrwMFtRw80yaD_cGM/exec", {
-          method: "POST",
-          body: payload,
-        })
+      fetch("https://snowy-heart-e29c.edgardo-lunghi.workers.dev", {
+  method: "POST",
+  body: payload,
+})
+
         .then(res => res.text())
         .then(msg => alert(msg))
         .catch(err => alert("Erro ao enviar: " + err));
