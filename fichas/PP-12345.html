@@ -117,7 +117,8 @@
       document.body.innerHTML = '<p style="color:red">Erro: Número de série inválido.</p>';
       throw new Error("Série inválida");
     }
-    const url = "https://script.google.com/macros/s/AKfycbwIZfEv1iHWmhwwwx4SvCazeUbOMtB8OXdPa_zol53xfx0QiqvTrwMFtRw80yaD_cGM/exec?serie=" + serie;
+    // CORREGIDO: antes decía ?serie= → ahora es ?numero_serie=
+    const url = "https://script.google.com/macros/s/AKfycbwIZfEv1iHWmhwwwx4SvCazeUbOMtB8OXdPa_zol53xfx0QiqvTrwMFtRw80yaD_cGM/exec?numero_serie=" + serie;
 
     fetch(url)
       .then(r => r.json())
