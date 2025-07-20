@@ -123,7 +123,7 @@
         payload.append("[botao_whatsapp]", botaoWhatsApp);
         payload.append("[botao_localizacao]", botaoLocalizacao);
 
-      fetch("https://snowy-heart-e29c.edgardo-lunghi.workers.dev", {
+      fetch("https://snowy-heart-e29c.edgardo-lunghi.workers.dev/api", {
   method: "POST",
   body: payload,
 })
