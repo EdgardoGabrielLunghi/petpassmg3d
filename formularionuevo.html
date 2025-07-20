@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ativar Pet Pass</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f2f4f8;
+      margin: 0;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header img {
+      max-width: 160px;
+      margin-top: 10px;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <img src="logo-petpass.png" alt="Pet Pass Logo" />
+</header>
+  <form id="petpassForm">
+    <h1>Ativar Pet Pass</h1>
+
+    <label>Número de Série (ex: PP-12345):</label>
+    <input type="text" name="numero_serie" required />
+
+    <label>📸 Foto do Pet:</label>
+    <input type="file" name="foto_pet" accept="image/*" required />
+
+    <label>🐾 Nome do Pet:</label>
+    <input type="text" name="[nome_pet]" required />
+    <label>Espécie:</label>
+    <input type="text" name="[especie]" required />
+    <label>Raça:</label>
+    <input type="text" name="[raca]" />
+    <label>Sexo:</label>
+    <select name="[sexo]">
+      <option value="Macho">Macho</option>
+      <option value="Fêmea">Fêmea</option>
+    </select>
+    <label>Cor:</label>
+    <input type="text" name="[cor]" />
+
+    <label>🚨 Alergias ou Intolerâncias:</label>
+    <textarea name="[alergias_observadas]"></textarea>
+
+    <label>👤 Nome do Tutor:</label>
+    <input type="text" name="[nome_tutor]" required />
+    <label>Telefone:</label>
+    <input type="tel" name="[telefone]" required />
+    <label>Email:</label>
+    <input type="email" name="[email]" />
+    <label>Endereço (Referência aproximada):</label>
+    <input type="text" name="[endereco]" />
+
+    <label>💉 Vacinas:</label>
+    <textarea name="[vacinas]"></textarea>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    document.getElementById('petpassForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+
+      const telefone = form['[telefone]'].value.replace(/\D/g, '');
+      const botaoWhatsApp = `https://wa.me/55${telefone}?text=Olá! Encontrei seu pet!`;
+      const botaoLocalizacao = `https://petpassmg3d.github.io/petpass-localizacao/localizacao.html?numero=55${telefone}`;
+
+      const fileInput = form.querySelector('input[name="foto_pet"]');
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = function () {
+        const base64Image = reader.result.split(',')[1];
+        const payload = new URLSearchParams();
+
+        for (const [key, value] of formData.entries()) {
+          if (key !== "foto_pet") payload.append(key, value);
+        }
+
+        payload.append("[foto_pet]", base64Image);
+        payload.append("[botao_whatsapp]", botaoWhatsApp);
+        payload.append("[botao_localizacao]", botaoLocalizacao);
+
+        fetch("https://script.google.com/macros/s/AKfycbwIZfEv1iHWmhwwwx4SvCazeUbOMtB8OXdPa_zol53xfx0QiqvTrwMFtRw80yaD_cGM/exec", {
+          method: "POST",
+          body: payload,
+        })
+        .then(res => res.text())
+        .then(msg => alert(msg))
+        .catch(err => alert("Erro ao enviar: " + err));
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        alert("Por favor, selecione uma foto.");
+      }
+    });
+  </script>
+</body>
+</html>
